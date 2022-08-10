@@ -6,7 +6,7 @@
 # @Software: PyCharm
 from django.urls import path, include
 from rest_framework_jwt.views import obtain_jwt_token
-import views
+from . import views
 urlpatterns = [
     path('login/', obtain_jwt_token),
     path('register/', views.RegisterView.as_view()),
