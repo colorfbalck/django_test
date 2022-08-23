@@ -13,10 +13,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import datetime
-
+import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -40,10 +40,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'projects.apps.ProjectsConfig',
+
     'rest_framework',
     'django_filters',
-    # 'drf_yasg',
+    'drf_yasg',
+
+    # 注册子应用
+    # 子应用名.apps，子应用名首字母大写Config
+    'projects.apps.ProjectsConfig',
+    'user.apps.UserConfig',
+    'configures.apps.ConfiguresConfig',
+    'debugtalks.apps.DebugtalksConfig',
+    'envs.apps.EnvsConfig',
+    'interfaces.models.Interface',
+    'reports.apps.ReportsConfig',
+    'testsuites.apps.TestsuitesConfig',
+    'testcases.apps.TestcasesConfig'
+
+
 ]
 JWT_AUTH = {
     # 默认5分钟过期，可以使用JWT_EXPIRATION_DELTA来设置过期时间
@@ -56,12 +70,31 @@ JWT_AUTH = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    #需要添加在CommonMi dd1 eware中间件之前
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# 添加白名单
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST =[
+# #
+# "http://127.0.0.1:8080",
+# #
+# "http://localhost:8080",
+#
+# "http://192.168.1.63:8080",
+# #
+# "http://127.0.0.1:9000",
+# #
+# "http://localhost:9000",
+# ]
+# 允许跨域时携带Cookie,默认为False
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'demo_dj.urls'
 
