@@ -5,8 +5,9 @@
 # @File    : serializer.py
 # @Software: PyCharm
 from rest_framework import serializers
+
+from interfaces.models import Interface
 from projects.models import Projects
-from projects.models import Interface
 # 1.继承Serializer类或者子类
 from rest_framework.validators import UniqueValidator
 

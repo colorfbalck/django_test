@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'configures.apps.ConfiguresConfig',
     'debugtalks.apps.DebugtalksConfig',
     'envs.apps.EnvsConfig',
-    'interfaces.models.Interface',
+    'interfaces.apps.InterfacesConfig',
     'reports.apps.ReportsConfig',
     'testsuites.apps.TestsuitesConfig',
     'testcases.apps.TestcasesConfig'
@@ -127,7 +127,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'study_django',
+        'NAME': 'my_django2',
         'USER': 'root',
         'PASSWORD': '123456',
         "HOST": 'localhost',

@@ -15,7 +15,7 @@ class Interface(BaseModel):
     # SET_NULL -->当前外键值会被设置为None
     # PROJECT -->会报错
     # SET_DEFAULT -->设置默认值， 同时需要指定默认值， null=True
-    project = models.ForeignKey('Projects', on_delete=models.CASCADE, verbose_name="所属项目", help_text='所属项目')
+    project = models.ForeignKey('projects.Projects', on_delete=models.CASCADE, verbose_name="所属项目", help_text='所属项目')
     tester = models.CharField(verbose_name="测试人员", max_length=50, help_text="测试人员")
     desc = models.TextField(verbose_name="简要描述", help_text="简要描述", blank=True, null=True, default="接口简要描述")
 
