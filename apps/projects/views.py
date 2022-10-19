@@ -10,9 +10,9 @@ from rest_framework import filters, mixins, generics, viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from apps.projects.models import Projects
 from utils.pagination import PageNumberPaginationManual
-from .models import Projects
-from projects.serializer import ProjectSerializer, ProjectModelSerializer, ProjectNameSerializer, \
+from apps.projects.serializer import ProjectSerializer, ProjectModelSerializer, ProjectNameSerializer, \
     InterfaceNameSerializer, InterfaceByProjectIdSerializer
 # def index(request):
 #     """

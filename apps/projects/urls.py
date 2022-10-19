@@ -5,8 +5,8 @@
 # @File    : urls.py
 # @Software: PyCharm
 from django.urls import path, include
-from projects import views
 from rest_framework import routers
+from apps.projects import views
 # from projects.views import index
 # from rest_framework.routers import DefaultRouter
 # router = DefaultRouter()

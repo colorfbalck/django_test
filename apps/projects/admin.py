@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from projects.models import Projects
+from apps.projects.models import Projects
 
 
 class Projectsadmin(admin.ModelAdmin):
@@ -16,6 +16,7 @@ class Projectsadmin(admin.ModelAdmin):
 # #     list_display = ['name', 'leader', 'tester', 'publish_app']
 # #
 # #
-# # # admin.site.register(Interface)
+# #  admin.site.register(Interface)
 admin.site.register(Projects, Projectsadmin)
 # admin.site.register(Person)
+

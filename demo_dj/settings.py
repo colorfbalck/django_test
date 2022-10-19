@@ -47,16 +47,16 @@ INSTALLED_APPS = [
 
     # 注册子应用
     # 子应用名.apps，子应用名首字母大写Config
-    'projects.apps.ProjectsConfig',
-    'user.apps.UserConfig',
-    'configures.apps.ConfiguresConfig',
-    'debugtalks.apps.DebugtalksConfig',
-    'envs.apps.EnvsConfig',
-    'interfaces.apps.InterfacesConfig',
-    'reports.apps.ReportsConfig',
-    'testsuites.apps.TestsuitesConfig',
-    'testcases.apps.TestcasesConfig'
-
+    'apps.configures',
+    'apps.debugtalks',
+    'apps.envs',
+    'apps.interfaces',
+    'apps.projects',
+    'apps.reports',
+    'apps.testcases',
+    'apps.testsuites',
+    'apps.user',
+    'apps.zentao'
 
 ]
 JWT_AUTH = {
@@ -129,8 +129,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'my_django2',
         'USER': 'root',
-        'PASSWORD': '123456',
-        "HOST": 'localhost',
+        'PASSWORD': 'test20211216',
+        "HOST": '192.168.10.221',
         'PORT': 3306
     }
 }

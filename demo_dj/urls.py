@@ -34,10 +34,11 @@ schema_view = get_schema_view(
 )
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('projects.urls')),
+    path('', include('apps.projects.urls')),
     path('doc/', include_docs_urls('Tz测试平台接口文档', description="这是一个美轮美奂的测试平台")),
     # path('api/', include('rest_framework.urls'))
     # re_path(r'swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_time)),
     # path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schem-')
-    path('user/', include('user.urls'))
+    path('user/', include('user.urls')),
+    path('zentao/', include('apps.zentao.urls'))
 ]
