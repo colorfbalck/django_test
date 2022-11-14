@@ -5,10 +5,39 @@
 # @File    : serializer.py 
 # @Software: PyCharm
 from rest_framework import serializers
-from .models import Zentao_user_config
+from .models import ZentaoUserConfig, Bug, ZentaoConfig, BugProjectConfig
 
 
 class ZentaoLoginSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Zentao_user_config
+        model = ZentaoUserConfig
+        fields = "__all__"
+
+
+class ZentaoSidSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ZentaoUserConfig
+        fields = ('account', 'zentaosid')
+
+
+class ZentaoConfigSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ZentaoConfig
+        fields = "__all__"
+
+
+class ZentaoBugSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bug
+        fields = "__all__"
+
+
+class ZentaoBugProjectConfigSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = BugProjectConfig
         fields = "__all__"

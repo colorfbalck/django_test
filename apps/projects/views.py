@@ -412,7 +412,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectModelSerializer
     ordering_fields = ['name', 'leader']
     filterset_fields = ['name', 'leader', 'tester']
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     # 1.可以使用action装饰器来声明自定义的动作
     # 默认情况下，实例化方法名就是动作名

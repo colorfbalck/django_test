@@ -80,19 +80,19 @@ MIDDLEWARE = [
 ]
 
 # 添加白名单
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST =[
+# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST =[
 # #
-# "http://127.0.0.1:8080",
+"http://127.0.0.1:8080",
 # #
-# "http://localhost:8080",
+"http://localhost:8080",
 #
-# "http://192.168.1.63:8080",
+"http://192.168.1.63:8080",
 # #
-# "http://127.0.0.1:9000",
+"http://127.0.0.1:9000",
 # #
-# "http://localhost:9000",
-# ]
+"http://localhost:9000",
+]
 # 允许跨域时携带Cookie,默认为False
 CORS_ALLOW_CREDENTIALS = True
 
