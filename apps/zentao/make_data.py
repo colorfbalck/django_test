@@ -5,6 +5,7 @@
 # @File    : make_data.py 
 # @Software: PyCharm+
 import ast
+import pandas as pd
 
 
 class MakeData:
@@ -13,75 +14,40 @@ class MakeData:
         pass
 
     def CountWeek(self, bugs):
-        print(bugs[0]["bug"])
-        
+            data = pd.DataFrame(bugs)
+            result = []
+            for project, group in data.groupby(['project_id']):
+                project_bugs = group['project_id'].count()
+                bugmsg = []
+                project_bug = {"project_id": project,
+                               "project_bug_count": project_bugs,
+                               "bug": bugmsg}
+                data = group["bug"].values.tolist()
+                data2 = pd.DataFrame(data)
+                for severity, bug in data2.groupby(["severity"]):
+                    severity_bug_count = bug['severity'].count()
+                    severity_bug = []
+                    severity_bugs = {"severity_lev".format(bug['severity'].values[0]): severity,
+                                     "severity_bug_count": severity_bug_count,
+                                     "severity_bug": severity_bug
+                                     }
+                    for assignedTo, bug_detail in bug.groupby(["assignedTo"]):
+                        assignedto_bugs = bug['assignedTo'].count()
+                        assignedto_bug = []
+                        assignedto_bugs_total = {"assignedTo": "{}".format(assignedTo),
+                                                 "assignedto_bugs_total": assignedto_bugs,
+                                                 "assignedto_bug": assignedto_bug
+                                                 }
+                        for k, v in bug_detail.groupby(["id"]):
+                            bng = {"bug_id": v["id"].values[0],
+                                   "bug_title": v["title"].values[0]
+                                   }
+                            assignedto_bug.append(bng)
+                        severity_bug.append(assignedto_bugs_total)
+                    bugmsg.append(severity_bugs)
+                result.append(project_bug)
+            return result
 
-    # def count_bug(self):
-    #     """
-    #     统计bug数量
-    #     :return:
-    #     """
-    #     bug_status = self.db_get.get_all_buglist(self.time.get_oneday_before())
-    #     severity_lev1 = 0
-    #     severity_lev2 = 0
-    #     severity_lev3 = 0
-    #     severity_lev4 = 0
-    #     assignedTo = []
-    #     severity_lev1_bug = []
-    #     severity_lev1_bug_url = []
-    #     all_bug_data = []
-    #     project_id = bug_status[0]["project_id"]
-    #     for i in bug_status:
-    #         pr_id = i["project_id"]
-    #         if pr_id != project_id:
-    #             project_bug = {
-    #                 "project_id": project_id,
-    #                 "severity_lev1": severity_lev1,
-    #                 "severity_lev2": severity_lev2,
-    #                 "severity_lev3": severity_lev3,
-    #                 "severity_lev4": severity_lev4,
-    #                 "assignedTo": set(assignedTo),
-    #                 "severity_lev1_bug": severity_lev1_bug,
-    #                 "severity_lev1_bug_url": severity_lev1_bug_url
-    #             }
-    #             all_bug_data.append(project_bug)
-    #             severity_lev1 = 0
-    #             severity_lev2 = 0
-    #             severity_lev3 = 0
-    #             severity_lev4 = 0
-    #             project_id = pr_id
-    #             assignedTo = []
-    #             severity_lev1_bug = []
-    #             severity_lev1_bug_url = []
-    #         bug = ast.literal_eval(i["bug"])
-    #         bug_severity = int(bug["severity"])
-    #         bug_assignedTo = bug["assignedTo"]
-    #         assignedTo.append(bug_assignedTo)
-    #         if bug_severity == 1:
-    #             severity_lev1_bug.append(bug["title"])
-    #             url = "http://chandao.idmakers.cn/zentao/bug-view-{}.html".format(bug["id"])
-    #             severity_lev1_bug_url.append(url)
-    #             severity_lev1 += 1
-    #         elif bug_severity == 2:
-    #             severity_lev2 += 1
-    #         elif bug_severity == 3:
-    #             severity_lev3 += 1
-    #         elif bug_severity == 4:
-    #             severity_lev4 += 1
-    #         else:
-    #             make_data_log.error("BUG严重等级统计错误")
-    #     project_bug = {
-    #         "project_id": project_id,
-    #         "severity_lev1": severity_lev1,
-    #         "severity_lev2": severity_lev2,
-    #         "severity_lev3": severity_lev3,
-    #         "severity_lev4": severity_lev4,
-    #         "assignedTo": set(assignedTo),
-    #         "severity_lev1_bug": severity_lev1_bug,
-    #         "severity_lev1_bug_url": severity_lev1_bug_url
-    #     }
-    #     all_bug_data.append(project_bug)
-    #     return all_bug_data
 
     # def update_to_bug_status(self):
     #     """
