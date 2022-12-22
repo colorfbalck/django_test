@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/apps/zentao/zentao" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/apps/zentao/zentaos_old" vcs="Git" />
   </component>
 </project>

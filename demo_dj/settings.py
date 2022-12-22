@@ -57,8 +57,8 @@ INSTALLED_APPS = [
     'apps.testsuites',
     'apps.user',
     'apps.zentao'
-
 ]
+
 JWT_AUTH = {
     # 默认5分钟过期，可以使用JWT_EXPIRATION_DELTA来设置过期时间
     "JWT_EXPIRATION_DELTA": datetime.timedelta(days=1),
@@ -127,11 +127,11 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'my_django2',
+        'NAME': 'dj_test',
         'USER': 'root',
-        'PASSWORD': '',
-        "HOST": 'localhost',
-        'PORT': 3306
+        'PASSWORD': 'Ｍak&@ia0Dbe_',
+        "HOST": 'mariadb.idmakers.cn',
+        'PORT': 9381
     }
 }
 

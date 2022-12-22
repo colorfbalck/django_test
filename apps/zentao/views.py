@@ -97,11 +97,17 @@ class ZentaoBug(APIView):
 
 
 class ZentaoBugProjectsConfig(viewsets.ModelViewSet):
+    """
+    bug推送配置
+    """
     queryset = BugProjectConfig.objects.all()
     serializer_class = ZentaoBugProjectConfigSerializer
 
 
 class ZentaoBugListView(viewsets.ModelViewSet):
+    """
+    查询所有bug
+    """
     queryset = Bug.objects.all()
     serializer_class = ZentaoBugSerializer
 
