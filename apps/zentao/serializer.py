@@ -5,7 +5,7 @@
 # @File    : serializer.py 
 # @Software: PyCharm
 from rest_framework import serializers
-from .models import ZentaoUserConfig, Bug, ZentaoConfig, BugProjectConfig
+from .models import ZentaoUserConfig, Bug, ZentaoConfig, BugProjectConfig, BugPersonnelConfig
 
 
 class ZentaoLoginSerializer(serializers.ModelSerializer):
@@ -40,4 +40,13 @@ class ZentaoBugProjectConfigSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BugProjectConfig
+        fields = "__all__"
+
+
+class ZentaoBugPersonnelConfigSerializer(serializers.ModelSerializer):
+    """
+    bug指派人信息
+    """
+    class Meta:
+        model = BugPersonnelConfig
         fields = "__all__"

@@ -79,7 +79,7 @@ class BugPersonnelConfig(BaseModel):
     id = models.AutoField(verbose_name="ID主键", primary_key=True, help_text="ID主键")
     spell = models.CharField(verbose_name="拼音", max_length=50, help_text="拼音")
     name = models.CharField(verbose_name="姓名", max_length=50, help_text="姓名")
-    phone = models.IntegerField(verbose_name="手机号", help_text="手机号")
+    phone = models.CharField(verbose_name="手机号", max_length=50, help_text="手机号")
 
     class Meta:
         db_table = "tbl_zentao_bug_personnel_config"

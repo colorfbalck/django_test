@@ -13,6 +13,7 @@ router.register(r'account', views.ZentaoAccount)
 router.register(r"config", views.ZentaoConfig)
 router.register(r'bugprojectsconfig', views.ZentaoBugProjectsConfig)
 router.register(r'bugs', views.ZentaoBugListView)
+router.register(r'bugpersonnel', views.ZentaoBugPersonnelConfig)
 urlpatterns = [
     re_path(r'^(?P<account>.{3,20})/count/$', views.AccountValidateView.as_view(), name='check_account'),
     path('login/', views.ZentaoLogin.as_view(), name="zentao_login"),

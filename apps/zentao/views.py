@@ -13,11 +13,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSetMixin
 
-from apps.zentao.models import ZentaoUserConfig as zentaousermodels, Bug
+from apps.zentao.models import ZentaoUserConfig as zentaousermodels, Bug, BugPersonnelConfig
 from apps.zentao.models import ZentaoConfig as zentaoconfigmodels
 from apps.zentao.models import BugProjectConfig
 
-from apps.zentao.serializer import ZentaoLoginSerializer as zentaologinser
+from apps.zentao.serializer import ZentaoLoginSerializer as zentaologinser, ZentaoBugPersonnelConfigSerializer
 from apps.zentao.serializer import ZentaoConfigSerializer as zentaoser
 from apps.zentao.serializer import ZentaoSidSerializer
 from apps.zentao.serializer import ZentaoBugSerializer
@@ -118,6 +118,12 @@ class ZentaoBugListView(viewsets.ModelViewSet):
         return Response(res)
 
 
+class ZentaoBugPersonnelConfig(viewsets.ModelViewSet):
+    """
+    bug
+    """
+    queryset = BugPersonnelConfig.objects.all()
+    serializer_class = ZentaoBugPersonnelConfigSerializer
 
 
 
