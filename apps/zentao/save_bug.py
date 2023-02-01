@@ -33,7 +33,7 @@ class GetBugList:
             content = json.loads(results["data"])
             return content
         else:
-            print("查询失败")
+            print("查询失败:{}".format(result))
 
     def get_bug_list(self, projectid):
         """
@@ -64,7 +64,7 @@ class GetBugList:
         return products
 
     def add_bug(self, projectid):
-        """添加bugs数量到对应数据库"""
+        """添加bugs到数据库"""
         projects = self.get_all_prodcuts()
         for project in projects:
             self.add_bug(project)
@@ -86,9 +86,10 @@ class GetBugList:
 
 
 if __name__ == '__main__':
-    test = "ednc38v9hj46p6mr7vfdnsbrh5"
+    test = "rdroduvh3g89bk8943eta11hv6"
     res = GetBugList(test)
-    # result = res.get_bug_list(53)
+    # result = res.get_bug_list(48)
+    # print(result)
     # results = res.get_all_prodcuts()
     bug_list = res.add_all_bug()
     print(bug_list)

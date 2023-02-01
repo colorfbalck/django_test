@@ -33,6 +33,9 @@ class ZentaoAccount(viewsets.ModelViewSet, mixins.CreateModelMixin):
 
 
 class AccountValidateView(APIView):
+    """
+    查询禅道登录用户
+    """
     def get(self, request, account):
         data_dict = {
             "account": account,
@@ -42,6 +45,9 @@ class AccountValidateView(APIView):
 
 
 class ZentaoConfig(viewsets.ModelViewSet):
+    """
+    禅道访问地址
+    """
     queryset = zentaoconfigmodels.objects.all()
     serializer_class = zentaoser
 
@@ -55,18 +61,19 @@ class ZentaoLogin(APIView):
         serializer_class = zentaoser(instance=queryset, many=True)
         urls = serializer_class.data
         url = urls[0]["url"]
-        data = request.data
-        res = ChanDao(url).login_chandao(data)
+        request_user = request.data
+        res = ChanDao(url).login_chandao(request_user)
         if "zentaosid" in res:
-            ser2 = zentaousermodels.objects.filter(account=data["account"])
+            ser2 = zentaousermodels.objects.filter(account=request_user["account"])
             if ser2:
                 ser2.update(zentaosid=res["zentaosid"], enable=1)
                 return Response(res)
             else:
-                ser2.create(zentaosid=res["zentaosid"], enable=1)
+                ser2.create(account=request_user["account"], password=request_user["account"],
+                            zentaosid=res["zentaosid"], enable=1)
                 return Response(res)
         else:
-            ser2 = zentaousermodels.objects.filter(account=data["account"])
+            ser2 = zentaousermodels.objects.filter(account=request_user["account"])
             ser2.update(enable=0)
             return Response(res)
 
@@ -93,12 +100,12 @@ class ZentaoBug(APIView):
             except Exception:
                 return Response(serializer.errors)
             serializer.save()
-        return Response("2")
+        return Response("添加bug成功")
 
 
 class ZentaoBugProjectsConfig(viewsets.ModelViewSet):
     """
-    bug推送配置
+    禅道项目推送配置
     """
     queryset = BugProjectConfig.objects.all()
     serializer_class = ZentaoBugProjectConfigSerializer
@@ -120,7 +127,7 @@ class ZentaoBugListView(viewsets.ModelViewSet):
 
 class ZentaoBugPersonnelConfig(viewsets.ModelViewSet):
     """
-    bug
+    人员信息拼音对照
     """
     queryset = BugPersonnelConfig.objects.all()
     serializer_class = ZentaoBugPersonnelConfigSerializer

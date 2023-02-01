@@ -31,14 +31,11 @@ bug_data = {"msgtype": "markdown",
 # print(res)
 
 
-
 bug = SendMsgQYWX().get_bug_project()
 send_bug = Send().BugFormatProjectid(bug)
-# print(send_bug)
-# for i in range(len(send_bug)):
-#     data = {"msgtype": "markdown",
-#                 "markdown": {
-#                     "content": """%s""" % (send_bug[i].replace("\\n", "\n"))}}
-#     print(data)
-#     res = requests.post(url=url, json=data, verify=False).content.decode()
-#     print(res)
+for i in range(len(send_bug)):
+    data = {"msgtype": "markdown",
+                "markdown": {
+                    "content": """%s""" % (send_bug[i].replace("\\n", "\n"))}}
+    res = requests.post(url=url, json=data, verify=False).content.decode()
+    print(res)

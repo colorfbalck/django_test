@@ -38,7 +38,6 @@ class Send:
         """
         return str(bug).replace("', '", "").replace("['", "").replace("']", "")
 
-
     def BugFormatProjectid(self, unresolvedbugs):
         """
         获取未关闭的bug数据，并通过项目id进行区分
