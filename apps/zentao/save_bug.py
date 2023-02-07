@@ -34,6 +34,7 @@ class GetBugList:
             return content
         else:
             print("查询失败:{}".format(result))
+            raise
 
     def get_bug_list(self, projectid):
         """

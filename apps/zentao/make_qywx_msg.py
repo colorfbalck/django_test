@@ -50,7 +50,6 @@ class Send:
             project_name = (SendMsgQYWX().get_project_name(project_id))["project_name"]
             project_bugs = unresolvedbugs[project]["project_bug_count"]
             severitybugs = unresolvedbugs[project]["bug"]
-            project_id_webhook_url = unresolvedbugs[project]["project_id_webhook_url"]
             for severity_bug in range(len(severitybugs)):
                 severity_lev = severitybugs[severity_bug]["severity_lev"]
                 severity_bugs = severitybugs[severity_bug]["severity_bug"]
@@ -71,7 +70,6 @@ class Send:
                 elif severity_lev == "3":
                     severity_lev3 = severity_lev
                     severity_lev3_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
-                    print(severity_lev3_bugs)
                 elif severity_lev == "4":
                     severity_lev4 = severity_lev
                     severity_lev4_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
@@ -89,11 +87,5 @@ class Send:
                             severity_lev3=severity_lev3, severity_lev3_bugs=severity_lev3_bugs,
                             severity_lev4=severity_lev4, severity_lev4_bugs=severity_lev4_bugs,
                             )
-
                 projectcontent.append(content)
         return projectcontent
-
-
-if __name__ == '__main__':
-    s = Send()
-

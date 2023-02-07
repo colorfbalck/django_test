@@ -1,10 +1,9 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from django.test import TestCase
-
 # Create your tests here.
 import requests
 
-from send_msg import Send
+from make_qywx_msg import Send
 from send_qywx_msg import SendMsgQYWX
 
 url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a1967ab3-1853-45df-abb0-de06c0b94338"

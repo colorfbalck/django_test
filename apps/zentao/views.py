@@ -27,11 +27,6 @@ from apps.zentao.save_bug import GetBugList
 from apps.zentao.make_data import MakeData
 
 
-class ZentaoAccount(viewsets.ModelViewSet, mixins.CreateModelMixin):
-    queryset = zentaousermodels.objects.all()
-    serializer_class = zentaologinser
-
-
 class AccountValidateView(APIView):
     """
     查询禅道登录用户
@@ -92,7 +87,7 @@ class ZentaoBug(APIView):
                 'project_id': res[bug]['product'],
                 'bug_id': res[bug]['id'],
                 'bug': res[bug],
-                'isread': 0
+                'status': 0
                 }
             serializer = ZentaoBugSerializer(data=bugs)
             try:
