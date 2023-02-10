@@ -12,7 +12,6 @@ from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIVi
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSetMixin
-
 from apps.zentao.models import ZentaoUserConfig as zentaousermodels, Bug, BugPersonnelConfig
 from apps.zentao.models import ZentaoConfig as zentaoconfigmodels
 from apps.zentao.models import BugProjectConfig
@@ -104,6 +103,14 @@ class ZentaoBugProjectsConfig(viewsets.ModelViewSet):
     """
     queryset = BugProjectConfig.objects.all()
     serializer_class = ZentaoBugProjectConfigSerializer
+    ordering_fields = ['project_id', 'qywx_webhook', 'status']
+    filterset_fields = ['status']
+
+    @action(methods=["get"], detail=True)
+    def get_available_webhook(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = ZentaoBugProjectConfigSerializer(instance=instance)
+        return Response(serializer.data)
 
 
 class ZentaoBugListView(viewsets.ModelViewSet):
@@ -112,12 +119,7 @@ class ZentaoBugListView(viewsets.ModelViewSet):
     """
     queryset = Bug.objects.all()
     serializer_class = ZentaoBugSerializer
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        serializer = self.get_serializer(queryset, many=True)
-        res = MakeData().CountWeek(serializer.data)
-        return Response(res)
+    filterset_fields = ["project_id", 'status']
 
 
 class ZentaoBugPersonnelConfig(viewsets.ModelViewSet):
@@ -126,6 +128,5 @@ class ZentaoBugPersonnelConfig(viewsets.ModelViewSet):
     """
     queryset = BugPersonnelConfig.objects.all()
     serializer_class = ZentaoBugPersonnelConfigSerializer
-
 
 

@@ -9,6 +9,9 @@ from send_qywx_msg import SendMsgQYWX
 
 class Send:
 
+    def __init__(self):
+        self.send = SendMsgQYWX()
+
     def SeverityLevelBug(self, severity_bugs):
         """
         获取到各严重等级下bug数量以人员区分
@@ -17,10 +20,10 @@ class Send:
         """
         qywx_bug_content = []
         for person in range(len(severity_bugs)):
+            name = self.send.get_spell_name(severity_bugs[person]["assignedTo"])
             assigned_bug = \
             '''<font color=\\"comment\\">{assignedto_bug}</font>(<font color=\\"warning\\">{assignedto_bugs_total}</font>):\n'''\
-                               .format(assignedto_bug=severity_bugs[person]["assignedTo"],
-                                       assignedto_bugs_total=severity_bugs[person]["assignedto_bugs_total"]),
+                               .format(assignedto_bug=name,assignedto_bugs_total=severity_bugs[person]["assignedto_bugs_total"]),
             qywx_bug_content += assigned_bug
             person_bug = severity_bugs[person]["assignedto_bug"]
             for bug_detail in range(len(person_bug)):
@@ -40,14 +43,16 @@ class Send:
 
     def BugFormatProjectid(self, unresolvedbugs):
         """
-        获取未关闭的bug数据，并通过项目id进行区分
+        格式化未关闭bug，并通过项目id进行区分
         :param unresolvedbugs:
         :return:
         """
         projectcontent = []
         for project in range(len(unresolvedbugs)):
             project_id = unresolvedbugs[project]["project_id"]
-            project_name = (SendMsgQYWX().get_project_name(project_id))["project_name"]
+            project_config = self.send.get_project_name(project_id)
+            project_name = project_config["project_name"]
+            qywx_webhook = project_config["qywx_webhook"]
             project_bugs = unresolvedbugs[project]["project_bug_count"]
             severitybugs = unresolvedbugs[project]["bug"]
             for severity_bug in range(len(severitybugs)):
@@ -87,5 +92,8 @@ class Send:
                             severity_lev3=severity_lev3, severity_lev3_bugs=severity_lev3_bugs,
                             severity_lev4=severity_lev4, severity_lev4_bugs=severity_lev4_bugs,
                             )
-                projectcontent.append(content)
+                projectcontent.append({"webook": qywx_webhook,
+                                       "content": content})
         return projectcontent
+
+

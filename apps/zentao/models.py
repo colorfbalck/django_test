@@ -58,4 +58,3 @@ class BugPersonnelConfig(BaseModel):
         db_table = "zentao_personnel_spell"
         verbose_name = "人员信息拼音对照"
         verbose_name_plural = verbose_name
-

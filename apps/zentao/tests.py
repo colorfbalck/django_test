@@ -3,6 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 import requests
 
+from get_bugs import GetBUG
 from make_qywx_msg import Send
 from send_qywx_msg import SendMsgQYWX
 
@@ -30,11 +31,7 @@ bug_data = {"msgtype": "markdown",
 # print(res)
 
 
-bug = SendMsgQYWX().get_bug_project()
-send_bug = Send().BugFormatProjectid(bug)
-for i in range(len(send_bug)):
-    data = {"msgtype": "markdown",
-                "markdown": {
-                    "content": """%s""" % (send_bug[i].replace("\\n", "\n"))}}
-    res = requests.post(url=url, json=data, verify=False).content.decode()
-    print(res)
+project_on = SendMsgQYWX().get_bug_project()
+unresolvedbugs = GetBUG().get_unresolvedbugs(48)
+format_qywx_msg = Send().BugFormatProjectid(unresolvedbugs)
+qywx_response = SendMsgQYWX().push_to_qywx(format_qywx_msg)

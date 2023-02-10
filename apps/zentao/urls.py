@@ -10,7 +10,7 @@ from apps.zentao import views
 
 router = routers.DefaultRouter()
 router.register(r"config", views.ZentaoConfig)
-router.register(r'bugprojectsconfig', views.ZentaoBugProjectsConfig)
+router.register(r'projectsconfig', views.ZentaoBugProjectsConfig)
 router.register(r'bugs', views.ZentaoBugListView)
 router.register(r'spell', views.ZentaoBugPersonnelConfig)
 urlpatterns = [
