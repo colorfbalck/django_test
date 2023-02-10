@@ -47,53 +47,58 @@ class Send:
         :param unresolvedbugs:
         :return:
         """
-        projectcontent = []
-        for project in range(len(unresolvedbugs)):
-            project_id = unresolvedbugs[project]["project_id"]
-            project_config = self.send.get_project_name(project_id)
-            project_name = project_config["project_name"]
-            qywx_webhook = project_config["qywx_webhook"]
-            project_bugs = unresolvedbugs[project]["project_bug_count"]
-            severitybugs = unresolvedbugs[project]["bug"]
-            for severity_bug in range(len(severitybugs)):
-                severity_lev = severitybugs[severity_bug]["severity_lev"]
-                severity_bugs = severitybugs[severity_bug]["severity_bug"]
-                severity_lev1 = 0
-                severity_lev2 = 0
-                severity_lev3 = 0
-                severity_lev4 = 0
-                severity_lev1_bugs = "无"
-                severity_lev2_bugs = "无"
-                severity_lev3_bugs = "无"
-                severity_lev4_bugs = "无"
-                if severity_lev == "1":
-                    severity_lev1 = severity_lev
-                    severity_lev1_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
-                elif severity_lev == "2":
-                    severity_lev2 = severity_lev
-                    severity_lev2_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
-                elif severity_lev == "3":
-                    severity_lev3 = severity_lev
-                    severity_lev3_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
-                elif severity_lev == "4":
-                    severity_lev4 = severity_lev
-                    severity_lev4_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
-                content = '''<font color=\"info\">{project_id}</font>\n
-                            >未解决BUG:<font color=\"warning\">{project_bugs}</font>\n
-                            >各严重等级BUG数量:
-                            >一级bug：<font color=\"warning\">{severity_lev1}</font>:\n{severity_lev1_bugs}
-                            >二级bug：<font color=\"warning\">{severity_lev2}</font>:\n{severity_lev2_bugs}
-                            >三级bug：<font color=\"warning\">{severity_lev3}</font>:\n{severity_lev3_bugs}
-                            >四级bug：<font color=\"warning\">{severity_lev4}</font>:\n{severity_lev4_bugs}
-                            ''' \
-                    .format(project_id=project_name, project_bugs=project_bugs,
-                            severity_lev1=severity_lev1, severity_lev1_bugs=severity_lev1_bugs,
-                            severity_lev2=severity_lev2, severity_lev2_bugs=severity_lev2_bugs,
-                            severity_lev3=severity_lev3, severity_lev3_bugs=severity_lev3_bugs,
-                            severity_lev4=severity_lev4, severity_lev4_bugs=severity_lev4_bugs,
-                            )
-                projectcontent.append({"webook": qywx_webhook,
-                                       "content": content})
-        return projectcontent
-
+        if unresolvedbugs:
+            projectcontent = []
+            for project in range(len(unresolvedbugs)):
+                project_id = unresolvedbugs[project]["project_id"]
+                project_config = self.send.get_project_name(project_id)
+                project_name = project_config["project_name"]
+                qywx_webhook = project_config["qywx_webhook"]
+                project_bugs = unresolvedbugs[project]["project_bug_count"]
+                severitybugs = unresolvedbugs[project]["bug"]
+                for severity_bug in range(len(severitybugs)):
+                    severity_lev = severitybugs[severity_bug]["severity_lev"]
+                    severity_bugs = severitybugs[severity_bug]["severity_bug"]
+                    severity_lev1 = 0
+                    severity_lev2 = 0
+                    severity_lev3 = 0
+                    severity_lev4 = 0
+                    severity_lev1_bugs = "无"
+                    severity_lev2_bugs = "无"
+                    severity_lev3_bugs = "无"
+                    severity_lev4_bugs = "无"
+                    if severity_lev == "1":
+                        severity_lev1 = severity_lev
+                        severity_lev1_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
+                    elif severity_lev == "2":
+                        severity_lev2 = severity_lev
+                        severity_lev2_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
+                    elif severity_lev == "3":
+                        severity_lev3 = severity_lev
+                        severity_lev3_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
+                    elif severity_lev == "4":
+                        severity_lev4 = severity_lev
+                        severity_lev4_bugs = self.replace_bug(self.SeverityLevelBug(severity_bugs))
+                    content = '''<font color=\"info\">{project_id}</font>\n
+                                >未解决BUG:<font color=\"warning\">{project_bugs}</font>\n
+                                >各严重等级BUG数量:
+                                >一级bug：<font color=\"warning\">{severity_lev1}</font>:\n{severity_lev1_bugs}
+                                >二级bug：<font color=\"warning\">{severity_lev2}</font>:\n{severity_lev2_bugs}
+                                >三级bug：<font color=\"warning\">{severity_lev3}</font>:\n{severity_lev3_bugs}
+                                >四级bug：<font color=\"warning\">{severity_lev4}</font>:\n{severity_lev4_bugs}
+                                ''' \
+                        .format(project_id=project_name, project_bugs=project_bugs,
+                                severity_lev1=severity_lev1, severity_lev1_bugs=severity_lev1_bugs,
+                                severity_lev2=severity_lev2, severity_lev2_bugs=severity_lev2_bugs,
+                                severity_lev3=severity_lev3, severity_lev3_bugs=severity_lev3_bugs,
+                                severity_lev4=severity_lev4, severity_lev4_bugs=severity_lev4_bugs,
+                                )
+                    projectcontent.append({"webook": qywx_webhook,
+                                           "project_id": project_id,
+                                           "content": content}
+                                          )
+            return projectcontent
+        else:
+            print("bug数量小于0")
+            return
 

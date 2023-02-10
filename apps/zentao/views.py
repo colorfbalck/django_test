@@ -8,22 +8,19 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
-from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ViewSetMixin
 from apps.zentao.models import ZentaoUserConfig as zentaousermodels, Bug, BugPersonnelConfig
 from apps.zentao.models import ZentaoConfig as zentaoconfigmodels
 from apps.zentao.models import BugProjectConfig
-
-from apps.zentao.serializer import ZentaoLoginSerializer as zentaologinser, ZentaoBugPersonnelConfigSerializer
+from apps.zentao.serializer import ZentaoBugPersonnelConfigSerializer
 from apps.zentao.serializer import ZentaoConfigSerializer as zentaoser
 from apps.zentao.serializer import ZentaoSidSerializer
 from apps.zentao.serializer import ZentaoBugSerializer
 from apps.zentao.serializer import ZentaoBugProjectConfigSerializer
 from apps.zentao.login import ChanDao
 from apps.zentao.save_bug import GetBugList
-from apps.zentao.make_data import MakeData
+
 
 
 class AccountValidateView(APIView):
@@ -121,6 +118,21 @@ class ZentaoBugListView(viewsets.ModelViewSet):
     serializer_class = ZentaoBugSerializer
     filterset_fields = ["project_id", 'status']
 
+    @action(methods=["post"], detail=False, url_path='update_status')
+    def update_status(self, request, *args, **kwargs):
+        project_id = request.data['project_id']
+        res = self.queryset.filter(project_id=project_id)
+        if res:
+            res.update(status=1)
+            return Response({
+                "project_id": project_id,
+                'status': '0'
+            })
+        else:
+            return Response({
+                'status': '101',
+                "data": res
+            })
 
 class ZentaoBugPersonnelConfig(viewsets.ModelViewSet):
     """

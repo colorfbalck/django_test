@@ -32,6 +32,7 @@ bug_data = {"msgtype": "markdown",
 
 
 project_on = SendMsgQYWX().get_bug_project()
-unresolvedbugs = GetBUG().get_unresolvedbugs(48)
-format_qywx_msg = Send().BugFormatProjectid(unresolvedbugs)
-qywx_response = SendMsgQYWX().push_to_qywx(format_qywx_msg)
+print(project_on)
+# unresolvedbugs = GetBUG().get_unresolvedbugs(48)
+# format_qywx_msg = Send().BugFormatProjectid(unresolvedbugs)
+# qywx_response = SendMsgQYWX().push_to_qywx(format_qywx_msg)

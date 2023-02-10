@@ -46,18 +46,30 @@ class SendMsgQYWX:
         """
             推送消息至企业微信
         """
-        for detail in range(len(details)):
-            url = details[detail]["webook"]
-            bugs_data = {
-                "msgtype": "markdown",
-                "markdown": {
-                        "content": """%s""" % (details[detail]["content"].replace("\\n", "\n"))
+        if details:
+            for detail in range(len(details)):
+                url = details[detail]["webook"]
+                bugs_data = {
+                    "msgtype": "markdown",
+                    "markdown": {
+                            "content": """%s""" % (details[detail]["content"].replace("\\n", "\n"))
+                            }
                         }
-                    }
-            response = requests.post(url=url, json=bugs_data, verify=False).content.decode()
-            result = json.loads(response)
-            if result["errcode"] == 0 and result["errmsg"] == "ok":
-                print("消息发送成功，发送地址：{},发送内容：{}")
+                response = requests.post(url=url, json=bugs_data, verify=False).content.decode()
+                result = json.loads(response)
+                if result["errcode"] == 0 and result["errmsg"] == "ok":
+                    print("消息发送成功，发送地址：{},发送内容：{}")
+                    url = " /zentao/bugs/update_status/?project_id=53".format()
+                    update_status_result = self.api(url=url, method="get")
+                    if update_status_result["status"] and update_status_result["status"] == 0:
+                        print("更新该项目相关bug状态操作成功")
+                    else:
+                        print("更新该项目相关bug状态操作失败:{}".format(update_status_result))
+                else:
+                    print("消息发送失败：{}".format(result))
+        else:
+            print("发送消息为空，结束发送！")
+            return False
 
     def get_spell_name(self, spell):
         """
