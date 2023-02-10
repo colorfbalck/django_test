@@ -49,4 +49,4 @@ class ZentaoBugPersonnelConfigSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = BugPersonnelConfig
-        fields = "__all__"
+        fields = ('spell', 'name', "phone")

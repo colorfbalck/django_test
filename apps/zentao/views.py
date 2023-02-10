@@ -128,5 +128,4 @@ class ZentaoBugPersonnelConfig(viewsets.ModelViewSet):
     """
     queryset = BugPersonnelConfig.objects.all()
     serializer_class = ZentaoBugPersonnelConfigSerializer
-
-
+    filterset_fields = ["spell"]

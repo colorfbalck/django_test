@@ -50,7 +50,8 @@ class Bug(models.Model):
 
 
 class BugPersonnelConfig(BaseModel):
-    spell = models.CharField(verbose_name="拼音", primary_key=True, max_length=50, help_text="拼音")
+    id = models.AutoField(verbose_name="id主键", primary_key=True, help_text="id主键")
+    spell = models.CharField(verbose_name="拼音", max_length=50, help_text="拼音")
     name = models.CharField(verbose_name="姓名", max_length=50, help_text="姓名")
     phone = models.CharField(verbose_name="手机号", max_length=50, help_text="手机号")
 

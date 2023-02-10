@@ -20,7 +20,7 @@ class RunMain:
         if method == "get" or method == "GET":
             result = self.get(url, args)
         elif method == "post" or method == "POST":
-            result = self.post(url, data=args)
+            result = self.post(url, args)
         elif method == "delete" or method == "DELETE":
             result = self.delete(url, args)
         else:

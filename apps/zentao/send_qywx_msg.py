@@ -5,7 +5,11 @@
 # @File    : send_qywx_msg.py 
 # @Software: PyCharm
 import json
+
+import requests
+
 from api_common import RunMain
+
 
 class SendMsgQYWX:
 
@@ -25,7 +29,7 @@ class SendMsgQYWX:
         查询所有项目推送消息配置
         """
         url = "/zentao/projectsconfig/?p=1&s=999&status=1"
-        res = self.api(url=url, method="get").json()
+        res = self.api(url=url, method="get")
         projects_config = res["results"]
         available_projects = []
         for i in range(len(projects_config)):
@@ -38,20 +42,19 @@ class SendMsgQYWX:
                 print("项目id:" + str(projects_config[i]["project_id"]) + "qywx_webhook地址为空")
         return available_projects
 
-    def push_to_qywx(self, details):
-        """1.待完成提交成功后对bug状态修改
+    def push_to_qywx(self, details): #1.待完成提交成功后对bug状态修改
+        """
+            推送消息至企业微信
         """
         for detail in range(len(details)):
             url = details[detail]["webook"]
-
             bugs_data = {
                 "msgtype": "markdown",
                 "markdown": {
                         "content": """%s""" % (details[detail]["content"].replace("\\n", "\n"))
                         }
                     }
-            print(bugs_data)
-            response = self.api(url=url, method="post", data=bugs_data).content.decode()
+            response = requests.post(url=url, json=bugs_data, verify=False).content.decode()
             result = json.loads(response)
             if result["errcode"] == 0 and result["errmsg"] == "ok":
                 print("消息发送成功，发送地址：{},发送内容：{}")
@@ -60,15 +63,16 @@ class SendMsgQYWX:
         """
             通过拼音查询中文名称
         """
-        url = "/zentao/spell/{}".format(spell)
+        url = "/zentao/spell/?spell={}".format(spell)
         result = self.api(url=url, method="get")
         try:
-            return result["name"]
+            name = result["results"][0]["name"]
+            return name
         except:
             print("中文名称未找到，返回拼音：{}".format(spell))
             return spell
 
 
 if __name__ == '__main__':
-    res = SendMsgQYWX().get_spell_name("zhuzhihao")
+    res = SendMsgQYWX().get_spell_name("wang1keye")
     print(res)
