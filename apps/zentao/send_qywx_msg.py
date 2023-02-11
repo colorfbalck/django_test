@@ -16,31 +16,34 @@ class SendMsgQYWX:
     def __init__(self):
         self.api = RunMain().run_main
 
-    def get_project_name(self, projectid):
+    def get_project_config(self, *args):
         """
             通过项目id查询项目推送配置信息
         """
-        url = "/zentao/projectsconfig/{}".format(projectid)
-        resp = self.api(url=url, method="get")
-        return resp
+        url = "/zentao/projectsconfig/{}".format(args[0])
+        result = self.api(url=url, method="get")
+        if "?" in args:
+            projects_config = result["results"]
+            available_projects = []
+            for i in range(len(projects_config)):
+                if projects_config[i]["qywx_webhook"]:
+                    available_projects.append({
+                        "project_id": projects_config[i]["project_id"],
+                        "qywx_webhook": projects_config[i]["qywx_webhook"]
+                    })
+                else:
+                    print("项目id:" + str(projects_config[i]["project_id"]) + "qywx_webhook地址为空")
+            return available_projects
+        else:
+            return result
 
-    def get_bug_project(self):
+    def get_project_config_all(self):
         """
         查询所有项目推送消息配置
         """
-        url = "/zentao/projectsconfig/?p=1&s=999&status=1"
-        res = self.api(url=url, method="get")
-        projects_config = res["results"]
-        available_projects = []
-        for i in range(len(projects_config)):
-            if projects_config[i]["qywx_webhook"]:
-                available_projects.append({
-                    "project_id": projects_config[i]["project_id"],
-                    "qywx_webhook": projects_config[i]["qywx_webhook"]
-                })
-            else:
-                print("项目id:" + str(projects_config[i]["project_id"]) + "qywx_webhook地址为空")
-        return available_projects
+        url = "?p=1&s=999&status=1"
+        return self.get_project_config(url)
+
 
     def push_to_qywx(self, details): #1.待完成提交成功后对bug状态修改
         """
@@ -86,5 +89,6 @@ class SendMsgQYWX:
 
 
 if __name__ == '__main__':
-    res = SendMsgQYWX().get_spell_name("wang1keye")
+    # res = SendMsgQYWX().get_project_config(48)
+    res = SendMsgQYWX().get_project_config_all()
     print(res)

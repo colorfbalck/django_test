@@ -4,7 +4,7 @@ from django.test import TestCase
 import requests
 
 from get_bugs import GetBUG
-from make_qywx_msg import Send
+from make_qywx_msg import FormatQYWX
 from send_qywx_msg import SendMsgQYWX
 
 url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a1967ab3-1853-45df-abb0-de06c0b94338"
@@ -31,8 +31,11 @@ bug_data = {"msgtype": "markdown",
 # print(res)
 
 
-project_on = SendMsgQYWX().get_bug_project()
-print(project_on)
-# unresolvedbugs = GetBUG().get_unresolvedbugs(48)
-# format_qywx_msg = Send().BugFormatProjectid(unresolvedbugs)
-# qywx_response = SendMsgQYWX().push_to_qywx(format_qywx_msg)
+# project_on = SendMsgQYWX().get_project_config_all()
+# # unresolvedbugs = GetBUG().get_unresolvedbugs(53)
+# # print(unresolvedbugs)
+all_bug = GetBUG().get_unresolvedbugs_all()
+print(all_bug)
+# res = GetBUG().get_qywxbugs_all(all_bug)
+# print(res)
+# qywx_response = SendMsgQYWX().push_to_qywx(res)
