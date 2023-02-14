@@ -8,10 +8,10 @@ import requests
 
 
 class RunMain:
-    def __init__(self):
+    def __init__(self, host="http://127.0.0.1:8000"):
         self.session = requests.Session()
-        self.host = "http://127.0.0.1:8000"
-        self.timeout = 3
+        self.host = host
+        self.timeout = 20
 
     def run_main(self, method, url, data=None, headers=None, params=None, cookies=None):
         if headers is None:

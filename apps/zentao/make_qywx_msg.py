@@ -64,7 +64,6 @@ class FormatQYWX:
                                              f'</font>\n{severity_bugs}')
                     content = "\n".join(content_parts)
                     if len(content) > 2000:
-                        # Split content into parts of length <= 4000
                         content_parts = [content[i:i + 2000] for i in range(0, len(content), 2000)]
                     else:
                         content_parts = [content]

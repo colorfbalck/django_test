@@ -27,14 +27,16 @@ class GetBugList:
             'content-type': "application/x-www-form-urlencoded;charset=UTF-8",
             'cache-control': "no-cache",
         }
-        result = self.res.get(url=url, headers=heder).content.decode('utf-8')
-        if "<html>" not in result:
-            results = json.loads(result)
-            content = json.loads(results["data"])
-            return content
-        else:
-            print("查询失败:{}".format(result))
-            raise
+        try:
+            result = self.res.get(url=url, headers=heder).content.decode('utf-8')
+            if "<html>" not in result:
+                results = json.loads(result)
+                content = json.loads(results[ "data" ])
+                return content
+            else:
+                print("查询失败:{}".format(result))
+        except Exception as e:
+            print(f"查询出现异常：{e}")
 
     def get_bug_list(self, projectid):
         """

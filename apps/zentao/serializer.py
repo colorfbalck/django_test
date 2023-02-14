@@ -35,6 +35,24 @@ class ZentaoBugSerializer(serializers.ModelSerializer):
         model = Bug
         fields = "__all__"
 
+    def validate(self, attrs):
+        bug_id = attrs.get("bug_id")
+        if Bug.objects.filter(bug_id=bug_id).exists():
+            raise serializers.ValidationError(f"该bug：{bug_id}已添加，已修改状态为开启")
+        return attrs
+
+    def create(self, validated_data):
+        instance, created = Bug.objects.get_or_create(
+            bug_id=validated_data["bug_id"],
+            defaults={"project_id": validated_data["project_id"], "bug": validated_data["bug"], "status": 0},
+        )
+        if not created:
+            instance.project_id = validated_data["project_id"]
+            instance.bug = validated_data["bug"]
+            instance.status = 0
+            instance.save()
+        return instance
+
 
 class ZentaoBugProjectConfigSerializer(serializers.ModelSerializer):
 

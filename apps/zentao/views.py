@@ -75,22 +75,19 @@ class ZentaoBug(APIView):
     """
     def get(self, request):
         queryset = zentaousermodels.objects.filter(enable=1)
-        serializer_class = ZentaoSidSerializer(instance=queryset, many=True)
-        zensid = serializer_class.data[0]["zentaosid"]
-        res = GetBugList(zensid).add_all_bug()
-        for bug in range(len(res)):
-            bugs = {
-                'project_id': res[bug]['product'],
-                'bug_id': res[bug]['id'],
-                'bug': res[bug],
-                'status': 0
-                }
-            serializer = ZentaoBugSerializer(data=bugs)
-            try:
-                serializer.is_valid(raise_exception=True)
-            except Exception:
-                return Response(serializer.errors)
-            serializer.save()
+        serializer = ZentaoSidSerializer(instance=queryset.first())
+        zentaosid = serializer.data["zentaosid"]
+        bug_list = GetBugList(zentaosid).add_all_bug()
+        for bug in bug_list:
+            serializer = ZentaoBugSerializer(data={
+                "project_id": bug["product"],
+                "bug_id": bug["id"],
+                "bug": bug,
+                "status": 0
+            })
+            serializer.is_valid(raise_exception=True)
+            res = serializer.save()
+            print(res)
         return Response("添加bug成功")
 
 
@@ -123,7 +120,7 @@ class ZentaoBugListView(viewsets.ModelViewSet):
         project_id = request.data['project_id']
         res = self.queryset.filter(project_id=project_id)
         if res:
-            res.update(status=0)
+            res.update(status=1)
             return Response({
                 "project_id": project_id,
                 'status': '0'
