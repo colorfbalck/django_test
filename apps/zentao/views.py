@@ -123,7 +123,7 @@ class ZentaoBugListView(viewsets.ModelViewSet):
         project_id = request.data['project_id']
         res = self.queryset.filter(project_id=project_id)
         if res:
-            res.update(status=1)
+            res.update(status=0)
             return Response({
                 "project_id": project_id,
                 'status': '0'

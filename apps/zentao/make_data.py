@@ -34,10 +34,10 @@ class MakeData:
                                  "severity_bug": severity_bug
                                  }
                 for assignedTo, bug_detail in bug.groupby(["assignedTo"]):  # 再通过缺陷负责人，获取每个人的缺陷数量
-                    assignedto_bugs = ""
+                    assignedto_bug_count = len(bug_detail)
                     assignedto_bug = []
                     assignedto_bugs_total = {"assignedTo": "{}".format(assignedTo),
-                                             "assignedto_bugs_total": assignedto_bugs,
+                                             "assignedto_bugs_total": assignedto_bug_count,
                                              "assignedto_bug": assignedto_bug
                                              }
                     for k, v in bug_detail.groupby(["id"]):  # 再通过项目id，获取每个缺陷的ID和标题
