@@ -27,15 +27,8 @@ bug_data = {"msgtype": "markdown",
                     """
                 }}
 
-# res = requests.post(url=url, json=data2, verify=False).content.decode()
-# print(res)
 
-
-# project_on = SendMsgQYWX().get_project_config_all()
-# # unresolvedbugs = GetBUG().get_unresolvedbugs(53)
-# # print(unresolvedbugs)
 all_bug = GetBUG().get_unresolvedbugs_all()
-print(all_bug)
-# res = GetBUG().get_qywxbugs_all(all_bug)
-# print(res)
-# qywx_response = SendMsgQYWX().push_to_qywx(res)
+res = GetBUG().get_qywxbugs_all(all_bug)
+qywx_response = SendMsgQYWX().push_to_qywx(res)
+

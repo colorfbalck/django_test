@@ -5,48 +5,55 @@
 # @File    : api_common.py 
 # @Software: PyCharm
 import requests
-host = "http://127.0.0.1:8000"
 
 
 class RunMain:
-
     def __init__(self):
-        pass
+        self.session = requests.Session()
+        self.host = "http://127.0.0.1:8000"
+        self.timeout = 3
 
-    def run_main(self, method, url, *args):
-        result = None
-        url = "http://127.0.0.1:8000" + url
-        print("请求方式:{}，请求url：{}，请求数据{}".format(method, url, args))
+    def run_main(self, method, url, data=None, headers=None, params=None, cookies=None):
+        if headers is None:
+            headers = {}
+        if params is None:
+            params = {}
+        if cookies is None:
+            cookies = {}
+        url = self.host + url
         if method == "get" or method == "GET":
-            result = self.get(url, args)
+            return self.get(url, headers=headers, params=params, cookies=cookies)
         elif method == "post" or method == "POST":
-            result = self.post(url, args)
+            return self.post(url, data, headers=headers, params=params, cookies=cookies)
         elif method == "delete" or method == "DELETE":
-            result = self.delete(url, args)
+            return self.delete(url, data, headers=headers, params=params, cookies=cookies)
         else:
             print("请求方式错误：{}".format(method))
-        return result
+            return False
 
-    def get(self, url,  args):
+    def get(self, url, headers=None, params=None, cookies=None):
         try:
-            result = requests.get(url=url, params=args, timeout=3).json()
-            return result
+            response = self.session.get(url=url, headers=headers, params=params, cookies=cookies,
+                                        timeout=self.timeout)
+            return response.json()
         except requests.exceptions.ConnectTimeout:
             print("请求服务器超时，请检查连接：GET:{}".format(url))
             return False
 
-    def post(self, url, data):
+    def post(self, url, data=None, headers=None, params=None, cookies=None):
         try:
-            result = requests.post(url=url, json=data, timeout=3).json()
-            return result
+            response = self.session.post(url=url, json=data, headers=headers, params=params, cookies=cookies,
+                                         timeout=self.timeout)
+            return response.json()
         except requests.exceptions.ConnectTimeout:
             print("请求服务器超时，请检查连接：POST:{}".format(url))
             return False
 
-    def delete(self, url, data):
+    def delete(self, url, data=None, headers=None, params=None, cookies=None):
         try:
-            result = requests.delete(url=url, json=data).json()
-            return result
+            response = self.session.delete(url=url, json=data, headers=headers, params=params, cookies=cookies,
+                                           timeout=self.timeout)
+            return response.json()
         except requests.exceptions.ConnectTimeout:
-            print("请求服务器超时，请检查连接：delete:{}".format(url))
+            print("请求服务器超时，请检查连接：DELETE:{}".format(url))
             return False

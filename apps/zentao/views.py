@@ -134,6 +134,7 @@ class ZentaoBugListView(viewsets.ModelViewSet):
                 "data": res
             })
 
+
 class ZentaoBugPersonnelConfig(viewsets.ModelViewSet):
     """
     人员信息拼音对照

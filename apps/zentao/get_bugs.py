@@ -36,7 +36,7 @@ class GetBUG:
 
     def get_unresolvedbugs_all(self):
         """
-            查询所有未关闭BUG，并行同一格式化
+            查询所有未关闭BUG，并行格式为json类型
         """
         project_on = SendMsgQYWX().get_project_config_all()
         all_project_config = project_on["results"]
@@ -53,9 +53,9 @@ class GetBUG:
         """
         if unresolvedbugs:
             project_msg = []
-            qywx_msg = self.format_qywx.BugFormatProjectid(unresolvedbugs)
-            project_msg.append(qywx_msg)
-            print(project_msg)
+            for project_unresolvebug in unresolvedbugs:
+                qywx_msg = self.format_qywx.BugFormatProjectids(project_unresolvebug)
+                project_msg.append(qywx_msg)
             return project_msg
         else:
             print("待格式化bug为空")
