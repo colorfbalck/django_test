@@ -1,12 +1,5 @@
-import hashlib
-import json
 
-from django.shortcuts import render
-
-# Create your views here.
-from django_filters.rest_framework import DjangoFilterBackend
-
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -20,7 +13,6 @@ from apps.zentao.serializer import ZentaoBugSerializer
 from apps.zentao.serializer import ZentaoBugProjectConfigSerializer
 from apps.zentao.login import ChanDao
 from apps.zentao.save_bug import GetBugList
-
 
 
 class AccountValidateView(APIView):
@@ -78,6 +70,8 @@ class ZentaoBug(APIView):
         serializer = ZentaoSidSerializer(instance=queryset.first())
         zentaosid = serializer.data["zentaosid"]
         bug_list = GetBugList(zentaosid).add_all_bug()
+        errors = []  # 用于收集所有错误信息
+
         for bug in bug_list:
             serializer = ZentaoBugSerializer(data={
                 "project_id": bug["product"],
@@ -85,9 +79,15 @@ class ZentaoBug(APIView):
                 "bug": bug,
                 "status": 0
             })
-            serializer.is_valid(raise_exception=True)
+            try:
+                serializer.is_valid(raise_exception=True)
+            except serializers.ValidationError as e:
+                errors.append(str(e))
+                continue
             res = serializer.save()
             print(res)
+        if errors:
+            raise serializers.ValidationError(list(set(errors)))
         return Response("添加bug成功")
 
 

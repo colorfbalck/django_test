@@ -28,7 +28,5 @@ bug_data = {"msgtype": "markdown",
                 }}
 
 
-all_bug = GetBUG().get_unresolvedbugs_all()
-res = GetBUG().get_qywxbugs_all(all_bug)
-qywx_response = SendMsgQYWX().push_to_qywx(res)
+
 

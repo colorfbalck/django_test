@@ -4,10 +4,10 @@
 # @Email   : 645154096@qq.com
 # @File    : run.py 
 # @Software: PyCharm
-from make_qywx_msg import Send
+from get_bugs import GetBUG
 from send_qywx_msg import SendMsgQYWX
 
-bugs = SendMsgQYWX().get_bug_project()
-print(bugs)
-# send_bug = Send().BugFormatProjectid(bugs)
+all_bug = GetBUG().get_unresolvedbugs_all()
+format_res = GetBUG().get_qywxbugs_all(all_bug)
+qywx_response = SendMsgQYWX().push_to_qywx(format_res)
 
