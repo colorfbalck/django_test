@@ -226,7 +226,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/debang.log'),  # 日志文件的位置
             'maxBytes': 300 * 1024 * 1024,
-            'backupCount': 10,
+            'backupCount': 100,
             'formatter': 'verbose'
         },
     },
