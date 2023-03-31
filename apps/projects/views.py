@@ -11,6 +11,7 @@ from rest_framework.decorators import action
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from apps.projects.models import Projects
+from apps.projects.utils import get_count_by_project
 from utils.pagination import PageNumberPaginationManual
 from apps.projects.serializer import ProjectSerializer, ProjectModelSerializer, ProjectNameSerializer, \
     InterfaceNameSerializer, InterfaceByProjectIdSerializer
@@ -429,3 +430,18 @@ class ProjectViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = InterfaceByProjectIdSerializer(instance=instance)
         return Response(serializer.data)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            datas = serializer.data
+            datas = get_count_by_project(datas)
+            return self.get_paginated_response(datas)
+
+        serializer = self.get_serializer(queryset, many=True)
+        datas = serializer.data
+        datas = get_count_by_project(datas)
+        return self.get_paginated_response(datas)
