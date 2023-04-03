@@ -40,5 +40,6 @@ urlpatterns = [
     # re_path(r'swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_time)),
     # path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schem-')
     path('user/', include('user.urls')),
+    path('interface/', include('apps.interfaces.urls')),
     path('zentao/', include('apps.zentao.urls'))
 ]
