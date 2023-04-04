@@ -42,4 +42,5 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('interface/', include('apps.interfaces.urls')),
     path('zentao/', include('apps.zentao.urls'))
+
 ]

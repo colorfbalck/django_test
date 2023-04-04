@@ -6,8 +6,9 @@
 # @Software: PyCharm
 import re
 
-from apps.testcases.models import Testcases
+
 # from apps.configures.models import Configures
+from apps.testcases.models import Testcases
 
 
 def get_count_by_interface(datas):
