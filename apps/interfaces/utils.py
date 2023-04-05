@@ -14,9 +14,9 @@ from apps.testcases.models import Testcases
 def get_count_by_interface(datas):
     data_list = []
     for item in datas:
-        match = re.search(r'(.*)T(.*)\..*?', item['create_time'])
+        result = re.search(r'(.*)T(.*)\..*?', item['create_time'])
         match1 = re.search(r'(.*)T(.*)\..*?', item['create_time'])
-        item['create_time'] = match.group(1) + ' ' + match.group(2)
+        item['create_time'] = result.group(1) + ' ' + result.group(2)
         item['update_time'] = match1.group(1) + ' ' + match1.group(2)
         project_id = item["project"]
         interfaces_testcases_count = Testcases.objects.filter(interface=item['id'], is_delete=False).count()
