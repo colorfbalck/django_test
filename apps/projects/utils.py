@@ -8,8 +8,7 @@ import re
 
 from django.db.models import Count
 from ..interfaces.models import Interface
-# from ..testsuits.models import TestSuits
-
+from ..testsuites.models import TestSuits
 
 
 def get_count_by_project(datas):

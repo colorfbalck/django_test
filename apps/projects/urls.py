@@ -34,7 +34,7 @@ urlpatterns = [
     # path('projects/names/', views.ProjectViewSet.as_view({
     #     "get": "names",
     # }), name='projects-names'),
-    #
+    # #
     # path('projects/<int:pk>/interfaces/', views.ProjectViewSet.as_view({
     #     "get": "interfaces",
     # }), name='interfaces')

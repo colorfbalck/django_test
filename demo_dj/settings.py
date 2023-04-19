@@ -127,13 +127,13 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
     'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'my_django2',
-            'USER': 'root',
-            'PASSWORD': '',
-            "HOST": 'localhost',
-            'PORT': 3306
-        }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dj_test',
+        'USER': 'root',
+        'PASSWORD': 'Ｍak&@ia0Dbe_',
+        "HOST": 'mariadb.idmakers.cn',
+        'PORT': 9381
+    }
 }
 
 

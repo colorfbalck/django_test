@@ -422,7 +422,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
     @action(methods=["get"], detail=False)
     def names(self, request):
         queryset = self.get_queryset()
-        serializer = ProjectNameSerializer(instance=queryset, many=True)
+        # serializer = ProjectNameSerializer(instance=queryset, many=True)
+        serializer = self.get_serializer(instance=queryset, many=True)
         return Response(serializer.data)
 
     @action(detail=True)
@@ -445,3 +446,9 @@ class ProjectViewSet(viewsets.ModelViewSet):
         datas = serializer.data
         datas = get_count_by_project(datas)
         return self.get_paginated_response(datas)
+
+    def get_serializer_class(self):
+        if self.action == "names":
+            return ProjectNameSerializer
+        else:
+            return self.serializer_class

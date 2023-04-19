@@ -7,7 +7,7 @@ from utils.base_models import BaseModel
 # 项目表为父表（”一”），接口表（“多”）为子表
 class Interface(BaseModel):
     id = models.AutoField(verbose_name="id主键", primary_key=True, help_text="id主键")
-    interface_name = models.CharField(verbose_name="接口名称", max_length=200, unique=True, help_text="项目名称")
+    name = models.CharField(verbose_name="接口名称", max_length=200, unique=True, help_text="项目名称")
     leader = models.CharField(verbose_name="负责人", max_length=50, help_text="负责人")
     # 第一个参数为关联的模型路径（应用名.模型表）或者模型类
     # 第二个参数设置的是，当父表删除之后，改字段的处理方式
@@ -27,4 +27,4 @@ class Interface(BaseModel):
         verbose_name_plural = "接口测试"
 
     def __str__(self):
-        return self.interface_name
+        return self.name
