@@ -42,6 +42,7 @@ urlpatterns = [
     path('user/', include('apps.user.urls')),
     path('interfaces/', include('apps.interfaces.urls')),
     path('envs/', include('apps.envs.urls')),
-    path('zentao/', include('apps.zentao.urls'))
+    path('zentao/', include('apps.zentao.urls')),
+    path('debugtalks/', include('apps.debugtalks.urls'))
 
 ]
