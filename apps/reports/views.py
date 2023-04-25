@@ -39,7 +39,7 @@ class ReportsViewSet(ModelViewSet):
 
         report_dir = os.path.join(settings.BASE_DIR)
         report_path = os.path.join(report_dir, mtch)
-        response= StreamingHttpResponse(get_file_contents(report_path))
+        response = StreamingHttpResponse(get_file_contents(report_path))
         response["Content-Type"] = "application/octet-stream"
         response["Content-Disposition"] = "attachment;filename*=UTF-8".format(name)
         return response

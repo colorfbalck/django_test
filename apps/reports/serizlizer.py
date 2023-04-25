@@ -20,9 +20,6 @@ class ReportsSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "html": {
                 'write_only': True
-            },
-            "create_time": {
-                'read_only:': True
             }
         }
 
