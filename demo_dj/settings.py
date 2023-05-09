@@ -120,7 +120,16 @@ WSGI_APPLICATION = 'demo_dj.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dj_test',
+        'USER': 'root',
+        'PASSWORD': 'Ｍak&@ia0Dbe_',
+        "HOST": 'mariadb.idmakers.cn',
+        'PORT': 9381
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -164,6 +173,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REPORTS_DIR = os.path.join(BASE_DIR, 'reports')
 
 REST_FRAMEWORK = {
     # 默认啊应渲染类
