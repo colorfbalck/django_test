@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -19,4 +21,6 @@ class ConfiguresViewSet(ModelViewSet):
         instance.save()  #逻辑删除
 
     def retrieve(self, request, *args, **kwargs):
-        pass
+        config_obj = self.get_object()
+        config_request = json.loads(config_obj.request, encoding='utf-8')
+        config_headers = config_request['config']['request']['headers']
